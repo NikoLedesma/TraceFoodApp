@@ -29,7 +29,7 @@ public class MealsDayServiceImpl implements MealsDayService {
     @Override
     @Transactional
     public MealsDay addNewMeal(MealsDay mealsDay,Meal meal) {
-        meal = this.mealService.createMeal(meal);
+        //meal = this.mealService.createMeal(meal);
         mealsDay.getMeals().add(meal);
         return this.mealsDayRepository.save(mealsDay);
     }

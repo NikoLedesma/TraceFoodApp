@@ -15,11 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+/*@RunWith(SpringRunner.class)
+@SpringBootTest*/
 public class MealsServiceTests {
 
-    @Autowired
+    /*@Autowired
     private MealsDayService mealsDayService;
     private MealsDay mealsDay;
     private Meal meal;
@@ -28,20 +28,20 @@ public class MealsServiceTests {
 
     @Before
     public void init(){
-        /*##*/
+
         mealsDay = new MealsDay();
         mealsDay.setId(1);
         mealsDay.setRoutineDate(new Date());
-        /*##*/
+
         ingredient = new Ingredient();
         ingredient.setId(1);
         ingredient.setName("zapallo");
         ingredient.setWeight(3.42f);
-        /*##*/
+
         mealType = new MealType();
         mealType.setId(1);
         mealType.setDescription("cualquier cosa");
-        /*##*/
+
         meal = new Meal();
         meal.setId(1);
         meal.setDescription("zapallo extremo");
@@ -49,8 +49,8 @@ public class MealsServiceTests {
         meal.setMealDate(new Date());
         meal.getIngredients().add(ingredient);
         meal.setMealType(mealType);
-    }
-
+    }*/
+/*
     @Test
     public void testCreateMealsDay() {
         this.mealsDayService.createMealsDay(mealsDay);
@@ -60,5 +60,5 @@ public class MealsServiceTests {
     public void testAddNewMeal() {
         this.mealsDayService.addNewMeal(mealsDay,meal);
     }
-
+*/
 }

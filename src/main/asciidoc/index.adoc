@@ -1,0 +1,21 @@
+= Getting Started With Spring REST Docs
+
+This is an example output for a service running at http://localhost:8080:
+
+Meals - GET
+^^^^^^^^^^^
+.request
+include::{snippets}/meals/get/http-request.adoc[]
+
+.response
+include::{snippets}/meals/get/http-response.adoc[]
+
+Meals - POST
+^^^^^^^^^^^^
+.request
+include::{snippets}/meals/create/http-request.adoc[]
+
+.response
+include::{snippets}/meals/create/http-response.adoc[]
+
+As you can see the format is very simple, and in fact you always get the same message.

@@ -25,4 +25,9 @@ public class MealServiceImpl implements MealService {
         return this.dishReposity.findAll();
     }
 
+    @Override
+    public Meal getMealById(Long mealId) {
+        return this.dishReposity.findOne(mealId);
+    }
+
 }
