@@ -52,12 +52,11 @@ public class Ingredient {
 
         Ingredient that = (Ingredient) o;
 
-        return id == that.id;
+        return id != null ? id.equals(that.id) : that.id == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return id != null ? id.hashCode() : 0;
     }
-
 }
