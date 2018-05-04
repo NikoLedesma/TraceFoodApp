@@ -2,7 +2,7 @@
 
 This is an example output for a service running at http://localhost:8080:
 
-Meals - GET
+Meal - GET
 ^^^^^^^^^^^
 .request
 include::{snippets}/meals/get/http-request.adoc[]
@@ -10,12 +10,58 @@ include::{snippets}/meals/get/http-request.adoc[]
 .response
 include::{snippets}/meals/get/http-response.adoc[]
 
-Meals - POST
+Meal - POST
 ^^^^^^^^^^^^
 .request
 include::{snippets}/meals/create/http-request.adoc[]
 
 .response
 include::{snippets}/meals/create/http-response.adoc[]
+
+
+MealsDay - GET
+^^^^^^^^^^^^^^
+.request
+include::{snippets}/mealsDay/get/http-request.adoc[]
+
+.response
+include::{snippets}/mealsDay/get/http-response.adoc[]
+
+MealsDay - POST
+^^^^^^^^^^^^^^^
+.request
+include::{snippets}/mealsDay/create/http-request.adoc[]
+
+.response
+include::{snippets}/mealsDay/create/http-response.adoc[]
+
+
+Ingredient - GET
+^^^^^^^^^^^^^^^^
+.request
+include::{snippets}/ingredient/get/http-request.adoc[]
+
+.response
+include::{snippets}/ingredient/get/http-response.adoc[]
+
+Ingredient - GET (ALL)
+^^^^^^^^^^^^^^^^^^^^^^
+.request
+include::{snippets}/ingredient/getAll/http-request.adoc[]
+
+.response
+include::{snippets}/ingredient/getAll/http-response.adoc[]
+
+
+Ingredient - POST
+^^^^^^^^^^^^^^^^^
+.request
+include::{snippets}/ingredient/create/http-request.adoc[]
+
+.response
+include::{snippets}/ingredient/create/http-response.adoc[]
+
+
+
 
 As you can see the format is very simple, and in fact you always get the same message.

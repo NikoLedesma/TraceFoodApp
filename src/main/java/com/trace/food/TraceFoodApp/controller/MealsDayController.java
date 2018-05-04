@@ -19,7 +19,7 @@ public class MealsDayController {
     private MealsDayService mealsDayService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public MealsDay createMealsDate(@RequestBody MealsDay mealsDay){
+    public MealsDay createMealsDay(@RequestBody MealsDay mealsDay){
         return this.mealsDayService.createMealsDay(mealsDay);
     }
 /*
@@ -29,7 +29,7 @@ public class MealsDayController {
     }*/
 
     @RequestMapping(method = RequestMethod.GET ,value = "/{mealsDateId}")
-    public MealsDay getMealsDateById(@PathVariable Long mealsDateId){
+    public MealsDay getMealsDayById(@PathVariable Long mealsDateId){
         MealsDay mealsDay = this.mealsDayService.getMealsDateById(mealsDateId);
         if(mealsDay == null){
             logger.error("Meals Day with id " + mealsDateId + " doesn't exist");
@@ -37,6 +37,11 @@ public class MealsDayController {
         }
         logger.info("Meals Day with id " + mealsDateId + " was founded");
         return mealsDay;
+    }
+
+
+    public void setMealsDayService(MealsDayService mealsDayService) {
+        this.mealsDayService = mealsDayService;
     }
 
 }

@@ -9,19 +9,23 @@ public class Ingredient {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private Long id;
 
     @Column(name = "name")
-    public String name;
+    private String name;
 
     @Column(name = "weight")
-    public float weight;
+    private float weight;
 
-    public long getId() {
+    /*@ManyToOne
+    @JoinColumn(name = "meal_id")
+    private Meal meal;*/
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,6 +43,21 @@ public class Ingredient {
 
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Ingredient that = (Ingredient) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 
 }

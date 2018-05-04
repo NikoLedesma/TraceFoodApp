@@ -12,7 +12,7 @@ public class Meal {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "description")
     private String Description;
@@ -29,6 +29,7 @@ public class Meal {
     private MealType mealType;
 
     @OneToMany(cascade = CascadeType.ALL)
+    //@OneToMany(cascade = CascadeType.ALL,mappedBy = "meal")
     @JoinColumn(name="id_meal")
     private List<Ingredient> ingredients;
 
@@ -45,11 +46,11 @@ public class Meal {
         Description = description;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -89,12 +90,11 @@ public class Meal {
 
         Meal meal = (Meal) o;
 
-        return id == meal.id;
+        return id != null ? id.equals(meal.id) : meal.id == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return id != null ? id.hashCode() : 0;
     }
-
 }

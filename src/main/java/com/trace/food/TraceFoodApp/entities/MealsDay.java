@@ -45,4 +45,19 @@ public class MealsDay {
     public void setRoutineDate(Date routineDate) {
         this.routineDate = routineDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MealsDay mealsDay = (MealsDay) o;
+
+        return id == mealsDay.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }

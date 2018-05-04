@@ -1,6 +1,6 @@
 package com.trace.food.TraceFoodApp.Controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.trace.food.TraceFoodApp.controller.MealController;
 import com.trace.food.TraceFoodApp.entities.Ingredient;
 import com.trace.food.TraceFoodApp.entities.Meal;
@@ -10,16 +10,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,23 +29,18 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(MealController.class)
 @ContextConfiguration(classes = {MealService.class})
-@AutoConfigureRestDocs(outputDir = "target/snippets")
-public class MealWebLayerTest {
+public class MealWebLayerTest extends WebLayerTest {
 
 
-    private Meal meal = null;
+    private Meal mealResponse = null;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @MockBean
-    MealService mealService;
+    private MealService mealService;
 
     @Rule
     public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/snippets");
@@ -58,44 +49,69 @@ public class MealWebLayerTest {
     public void setup() {
         MealController mealController = new MealController();
         mealController.setMealService(this.mealService);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(mealController).apply(documentationConfiguration(this.restDocumentation)).build();
-
-        MealType mealType = new MealType();
-        mealType.setId(1L);
-        mealType.setDescription("desayuno");
-        List<Ingredient> ingredients = new ArrayList <Ingredient>();
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(12L);
-        ingredient.setWeight(34.3F);
-        ingredient.setName("meat");
-        ingredients.add(ingredient);
-        meal = new Meal();
-        meal.setId(0L);
-        meal.setDescription("milanesa con pure");
-        meal.setInputDateTime(new Date());
-        meal.setMealDate(new Date());
-        meal.setMealType(mealType);
-        meal.setIngredients(ingredients);
+        super.setMockMvc(mealController,restDocumentation);
+        this.createMockMealResponse();
     }
 
     @Test
-    public void testGetMealByIdMVC() throws Exception{
-        when(this.mealService.getMealById(1L)).thenReturn(meal);
-        this.mockMvc.perform(get("/meals/1"))
+    public void testGetMealByIdMVC() throws Exception {
+        when(this.mealService.getMealById(mealResponse.getId())).thenReturn(mealResponse);
+        this.mockMvc.perform(get("/meals/" + mealResponse.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(document("meals/get"));
     }
 
     @Test
-    public void testCreateMealMVC() throws Exception{
-        when(this.mealService.createMeal(meal)).thenReturn(meal);
+    public void testCreateMealMVC() throws Exception {
+        Meal req = createMockMealReq();
+        when(this.mealService.createMeal(req)).thenReturn(mealResponse);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         this.mockMvc.perform(post("/meals")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(meal)))
+                .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
                 .andDo(document("meals/create"));
     }
 
+    private void createMockMealResponse() {
+        MealType mealType = new MealType();
+        mealType.setId(1L);
+        mealType.setDescription("desayuno");
+        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(12L);
+        ingredient.setWeight(34.3F);
+        ingredient.setName("meat");
+        ingredients.add(ingredient);
+        mealResponse = new Meal();
+        mealResponse.setId(1L);
+        mealResponse.setDescription("milanesa con pure");
+        mealResponse.setInputDateTime(new Date());
+        mealResponse.setMealDate(new Date());
+        mealResponse.setMealType(mealType);
+        mealResponse.setIngredients(ingredients);
+    }
+
+
+    private Meal createMockMealReq() {
+        MealType mealType = new MealType();
+        mealType.setId(1L);
+        mealType.setDescription("desayuno");
+        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+        Ingredient ingredient = new Ingredient();
+        //ingredient.setId(12L);
+        ingredient.setWeight(34.3F);
+        ingredient.setName("meat");
+        ingredients.add(ingredient);
+        Meal meal = new Meal();
+        //mealResponse.setId(0L);
+        meal.setDescription("milanesa con pure");
+        meal.setInputDateTime(new Date());
+        meal.setMealDate(new Date());
+        meal.setMealType(mealType);
+        meal.setIngredients(ingredients);
+        return  meal;
+    }
 
 }

@@ -7,6 +7,7 @@ import com.trace.food.TraceFoodApp.services.MealService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,10 @@ public class MealController {
         return meal;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
     public Meal createMeal(@RequestBody Meal meal){
-        return this.mealService.createMeal(meal);
+        Meal m = this.mealService.createMeal(meal);
+        return m;
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "/allMeals")
